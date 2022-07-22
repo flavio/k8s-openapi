@@ -13,6 +13,14 @@ pub struct KeyToPath {
     pub path: String,
 }
 
+impl crate::DeepMerge for KeyToPath {
+    fn merge_from(&mut self, other: Self) {
+        self.key.merge_from(other.key);
+        self.mode.merge_from(other.mode);
+        self.path.merge_from(other.path);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for KeyToPath {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

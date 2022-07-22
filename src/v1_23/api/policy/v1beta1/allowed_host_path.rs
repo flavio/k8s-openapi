@@ -12,6 +12,13 @@ pub struct AllowedHostPath {
     pub read_only: Option<bool>,
 }
 
+impl crate::DeepMerge for AllowedHostPath {
+    fn merge_from(&mut self, other: Self) {
+        self.path_prefix.merge_from(other.path_prefix);
+        self.read_only.merge_from(other.read_only);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AllowedHostPath {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

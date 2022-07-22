@@ -13,6 +13,8 @@ impl Default for IntOrString {
     }
 }
 
+impl crate::DeepMerge for IntOrString {}
+
 impl<'de> crate::serde::Deserialize<'de> for IntOrString {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;

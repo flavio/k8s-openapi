@@ -13,6 +13,14 @@ pub struct CustomResourceDefinitionStatus {
     pub stored_versions: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for CustomResourceDefinitionStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.accepted_names.merge_from(other.accepted_names);
+        self.conditions.merge_from(other.conditions);
+        self.stored_versions.merge_from(other.stored_versions);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceDefinitionStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

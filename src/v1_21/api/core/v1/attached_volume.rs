@@ -10,6 +10,13 @@ pub struct AttachedVolume {
     pub name: String,
 }
 
+impl crate::DeepMerge for AttachedVolume {
+    fn merge_from(&mut self, other: Self) {
+        self.device_path.merge_from(other.device_path);
+        self.name.merge_from(other.name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AttachedVolume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -480,6 +480,14 @@ impl crate::Metadata for RoleBinding {
     }
 }
 
+impl crate::DeepMerge for RoleBinding {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.role_ref.merge_from(other.role_ref);
+        self.subjects.merge_from(other.subjects);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RoleBinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -10,6 +10,13 @@ pub struct NonResourceAttributes {
     pub verb: Option<String>,
 }
 
+impl crate::DeepMerge for NonResourceAttributes {
+    fn merge_from(&mut self, other: Self) {
+        self.path.merge_from(other.path);
+        self.verb.merge_from(other.verb);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NonResourceAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

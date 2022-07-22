@@ -381,6 +381,19 @@ impl crate::Metadata for StorageClass {
     }
 }
 
+impl crate::DeepMerge for StorageClass {
+    fn merge_from(&mut self, other: Self) {
+        self.allow_volume_expansion.merge_from(other.allow_volume_expansion);
+        self.allowed_topologies.merge_from(other.allowed_topologies);
+        self.metadata.merge_from(other.metadata);
+        self.mount_options.merge_from(other.mount_options);
+        self.parameters.merge_from(other.parameters);
+        self.provisioner.merge_from(other.provisioner);
+        self.reclaim_policy.merge_from(other.reclaim_policy);
+        self.volume_binding_mode.merge_from(other.volume_binding_mode);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StorageClass {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

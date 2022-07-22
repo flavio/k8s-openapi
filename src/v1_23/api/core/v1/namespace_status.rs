@@ -11,6 +11,13 @@ pub struct NamespaceStatus {
     pub phase: Option<String>,
 }
 
+impl crate::DeepMerge for NamespaceStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+        self.phase.merge_from(other.phase);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NamespaceStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

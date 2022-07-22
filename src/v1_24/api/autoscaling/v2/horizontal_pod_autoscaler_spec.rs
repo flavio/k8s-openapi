@@ -19,6 +19,16 @@ pub struct HorizontalPodAutoscalerSpec {
     pub scale_target_ref: crate::api::autoscaling::v2::CrossVersionObjectReference,
 }
 
+impl crate::DeepMerge for HorizontalPodAutoscalerSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.behavior.merge_from(other.behavior);
+        self.max_replicas.merge_from(other.max_replicas);
+        self.metrics.merge_from(other.metrics);
+        self.min_replicas.merge_from(other.min_replicas);
+        self.scale_target_ref.merge_from(other.scale_target_ref);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for HorizontalPodAutoscalerSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

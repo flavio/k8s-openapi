@@ -12,6 +12,13 @@ pub struct SeccompProfile {
     pub type_: String,
 }
 
+impl crate::DeepMerge for SeccompProfile {
+    fn merge_from(&mut self, other: Self) {
+        self.localhost_profile.merge_from(other.localhost_profile);
+        self.type_.merge_from(other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SeccompProfile {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -480,6 +480,14 @@ impl crate::Metadata for ControllerRevision {
     }
 }
 
+impl crate::DeepMerge for ControllerRevision {
+    fn merge_from(&mut self, other: Self) {
+        self.data.merge_from(other.data);
+        self.metadata.merge_from(other.metadata);
+        self.revision.merge_from(other.revision);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ControllerRevision {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -10,6 +10,13 @@ pub struct WebhookThrottleConfig {
     pub qps: Option<i64>,
 }
 
+impl crate::DeepMerge for WebhookThrottleConfig {
+    fn merge_from(&mut self, other: Self) {
+        self.burst.merge_from(other.burst);
+        self.qps.merge_from(other.qps);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for WebhookThrottleConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

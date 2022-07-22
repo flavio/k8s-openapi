@@ -34,6 +34,21 @@ pub struct SecurityContext {
     pub windows_options: Option<crate::api::core::v1::WindowsSecurityContextOptions>,
 }
 
+impl crate::DeepMerge for SecurityContext {
+    fn merge_from(&mut self, other: Self) {
+        self.allow_privilege_escalation.merge_from(other.allow_privilege_escalation);
+        self.capabilities.merge_from(other.capabilities);
+        self.privileged.merge_from(other.privileged);
+        self.proc_mount.merge_from(other.proc_mount);
+        self.read_only_root_filesystem.merge_from(other.read_only_root_filesystem);
+        self.run_as_group.merge_from(other.run_as_group);
+        self.run_as_non_root.merge_from(other.run_as_non_root);
+        self.run_as_user.merge_from(other.run_as_user);
+        self.se_linux_options.merge_from(other.se_linux_options);
+        self.windows_options.merge_from(other.windows_options);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SecurityContext {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

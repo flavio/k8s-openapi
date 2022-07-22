@@ -10,6 +10,13 @@ pub struct PriorityLevelConfigurationSpec {
     pub type_: String,
 }
 
+impl crate::DeepMerge for PriorityLevelConfigurationSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.limited.merge_from(other.limited);
+        self.type_.merge_from(other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PriorityLevelConfigurationSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

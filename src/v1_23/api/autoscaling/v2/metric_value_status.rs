@@ -13,6 +13,14 @@ pub struct MetricValueStatus {
     pub value: Option<crate::apimachinery::pkg::api::resource::Quantity>,
 }
 
+impl crate::DeepMerge for MetricValueStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.average_utilization.merge_from(other.average_utilization);
+        self.average_value.merge_from(other.average_value);
+        self.value.merge_from(other.value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for MetricValueStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

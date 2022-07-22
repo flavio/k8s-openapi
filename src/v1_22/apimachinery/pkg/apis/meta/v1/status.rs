@@ -43,6 +43,17 @@ impl crate::Metadata for Status {
     }
 }
 
+impl crate::DeepMerge for Status {
+    fn merge_from(&mut self, other: Self) {
+        self.code.merge_from(other.code);
+        self.details.merge_from(other.details);
+        self.message.merge_from(other.message);
+        self.metadata.merge_from(other.metadata);
+        self.reason.merge_from(other.reason);
+        self.status.merge_from(other.status);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Status {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

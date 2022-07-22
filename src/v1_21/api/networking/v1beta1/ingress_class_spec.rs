@@ -10,6 +10,13 @@ pub struct IngressClassSpec {
     pub parameters: Option<crate::api::networking::v1beta1::IngressClassParametersReference>,
 }
 
+impl crate::DeepMerge for IngressClassSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.controller.merge_from(other.controller);
+        self.parameters.merge_from(other.parameters);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for IngressClassSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

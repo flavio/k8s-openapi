@@ -16,6 +16,15 @@ pub struct NodeConfigStatus {
     pub last_known_good: Option<crate::api::core::v1::NodeConfigSource>,
 }
 
+impl crate::DeepMerge for NodeConfigStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.active.merge_from(other.active);
+        self.assigned.merge_from(other.assigned);
+        self.error.merge_from(other.error);
+        self.last_known_good.merge_from(other.last_known_good);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NodeConfigStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

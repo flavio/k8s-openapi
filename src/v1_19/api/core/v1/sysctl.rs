@@ -10,6 +10,13 @@ pub struct Sysctl {
     pub value: String,
 }
 
+impl crate::DeepMerge for Sysctl {
+    fn merge_from(&mut self, other: Self) {
+        self.name.merge_from(other.name);
+        self.value.merge_from(other.value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Sysctl {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

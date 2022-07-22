@@ -516,6 +516,26 @@ impl crate::Metadata for Event {
     }
 }
 
+impl crate::DeepMerge for Event {
+    fn merge_from(&mut self, other: Self) {
+        self.action.merge_from(other.action);
+        self.deprecated_count.merge_from(other.deprecated_count);
+        self.deprecated_first_timestamp.merge_from(other.deprecated_first_timestamp);
+        self.deprecated_last_timestamp.merge_from(other.deprecated_last_timestamp);
+        self.deprecated_source.merge_from(other.deprecated_source);
+        self.event_time.merge_from(other.event_time);
+        self.metadata.merge_from(other.metadata);
+        self.note.merge_from(other.note);
+        self.reason.merge_from(other.reason);
+        self.regarding.merge_from(other.regarding);
+        self.related.merge_from(other.related);
+        self.reporting_controller.merge_from(other.reporting_controller);
+        self.reporting_instance.merge_from(other.reporting_instance);
+        self.series.merge_from(other.series);
+        self.type_.merge_from(other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Event {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

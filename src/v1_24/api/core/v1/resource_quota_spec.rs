@@ -13,6 +13,14 @@ pub struct ResourceQuotaSpec {
     pub scopes: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for ResourceQuotaSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.hard.merge_from(other.hard);
+        self.scope_selector.merge_from(other.scope_selector);
+        self.scopes.merge_from(other.scopes);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ResourceQuotaSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -16,6 +16,15 @@ pub struct NetworkPolicySpec {
     pub policy_types: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for NetworkPolicySpec {
+    fn merge_from(&mut self, other: Self) {
+        self.egress.merge_from(other.egress);
+        self.ingress.merge_from(other.ingress);
+        self.pod_selector.merge_from(other.pod_selector);
+        self.policy_types.merge_from(other.policy_types);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicySpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

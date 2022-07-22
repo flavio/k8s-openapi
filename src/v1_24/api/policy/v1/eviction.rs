@@ -82,6 +82,13 @@ impl crate::Metadata for Eviction {
     }
 }
 
+impl crate::DeepMerge for Eviction {
+    fn merge_from(&mut self, other: Self) {
+        self.delete_options.merge_from(other.delete_options);
+        self.metadata.merge_from(other.metadata);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Eviction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -13,6 +13,14 @@ pub struct GlusterfsVolumeSource {
     pub read_only: Option<bool>,
 }
 
+impl crate::DeepMerge for GlusterfsVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.endpoints.merge_from(other.endpoints);
+        self.path.merge_from(other.path);
+        self.read_only.merge_from(other.read_only);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for GlusterfsVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

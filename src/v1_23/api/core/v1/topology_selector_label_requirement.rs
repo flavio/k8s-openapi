@@ -10,6 +10,13 @@ pub struct TopologySelectorLabelRequirement {
     pub values: Vec<String>,
 }
 
+impl crate::DeepMerge for TopologySelectorLabelRequirement {
+    fn merge_from(&mut self, other: Self) {
+        self.key.merge_from(other.key);
+        self.values.merge_from(other.values);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for TopologySelectorLabelRequirement {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

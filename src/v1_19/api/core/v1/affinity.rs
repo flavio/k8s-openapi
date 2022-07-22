@@ -13,6 +13,14 @@ pub struct Affinity {
     pub pod_anti_affinity: Option<crate::api::core::v1::PodAntiAffinity>,
 }
 
+impl crate::DeepMerge for Affinity {
+    fn merge_from(&mut self, other: Self) {
+        self.node_affinity.merge_from(other.node_affinity);
+        self.pod_affinity.merge_from(other.pod_affinity);
+        self.pod_anti_affinity.merge_from(other.pod_anti_affinity);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Affinity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

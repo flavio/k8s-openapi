@@ -19,6 +19,16 @@ pub struct StorageOSVolumeSource {
     pub volume_namespace: Option<String>,
 }
 
+impl crate::DeepMerge for StorageOSVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.read_only.merge_from(other.read_only);
+        self.secret_ref.merge_from(other.secret_ref);
+        self.volume_name.merge_from(other.volume_name);
+        self.volume_namespace.merge_from(other.volume_namespace);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StorageOSVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

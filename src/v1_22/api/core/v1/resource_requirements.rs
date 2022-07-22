@@ -10,6 +10,13 @@ pub struct ResourceRequirements {
     pub requests: Option<std::collections::BTreeMap<String, crate::apimachinery::pkg::api::resource::Quantity>>,
 }
 
+impl crate::DeepMerge for ResourceRequirements {
+    fn merge_from(&mut self, other: Self) {
+        self.limits.merge_from(other.limits);
+        self.requests.merge_from(other.requests);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ResourceRequirements {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

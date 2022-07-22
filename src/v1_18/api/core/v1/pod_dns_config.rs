@@ -13,6 +13,14 @@ pub struct PodDNSConfig {
     pub searches: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for PodDNSConfig {
+    fn merge_from(&mut self, other: Self) {
+        self.nameservers.merge_from(other.nameservers);
+        self.options.merge_from(other.options);
+        self.searches.merge_from(other.searches);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PodDNSConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

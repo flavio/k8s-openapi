@@ -7,6 +7,12 @@ pub struct ServiceStatus {
     pub load_balancer: Option<crate::api::core::v1::LoadBalancerStatus>,
 }
 
+impl crate::DeepMerge for ServiceStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.load_balancer.merge_from(other.load_balancer);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ServiceStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

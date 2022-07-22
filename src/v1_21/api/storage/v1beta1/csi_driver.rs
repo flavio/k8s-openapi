@@ -361,6 +361,13 @@ impl crate::Metadata for CSIDriver {
     }
 }
 
+impl crate::DeepMerge for CSIDriver {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CSIDriver {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

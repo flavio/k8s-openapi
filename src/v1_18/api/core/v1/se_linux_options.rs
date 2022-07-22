@@ -16,6 +16,15 @@ pub struct SELinuxOptions {
     pub user: Option<String>,
 }
 
+impl crate::DeepMerge for SELinuxOptions {
+    fn merge_from(&mut self, other: Self) {
+        self.level.merge_from(other.level);
+        self.role.merge_from(other.role);
+        self.type_.merge_from(other.type_);
+        self.user.merge_from(other.user);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for SELinuxOptions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

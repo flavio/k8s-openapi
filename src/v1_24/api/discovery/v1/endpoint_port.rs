@@ -16,6 +16,15 @@ pub struct EndpointPort {
     pub protocol: Option<String>,
 }
 
+impl crate::DeepMerge for EndpointPort {
+    fn merge_from(&mut self, other: Self) {
+        self.app_protocol.merge_from(other.app_protocol);
+        self.name.merge_from(other.name);
+        self.port.merge_from(other.port);
+        self.protocol.merge_from(other.protocol);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EndpointPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

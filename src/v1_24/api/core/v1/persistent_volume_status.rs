@@ -14,6 +14,14 @@ pub struct PersistentVolumeStatus {
     pub reason: Option<String>,
 }
 
+impl crate::DeepMerge for PersistentVolumeStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.message.merge_from(other.message);
+        self.phase.merge_from(other.phase);
+        self.reason.merge_from(other.reason);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PersistentVolumeStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

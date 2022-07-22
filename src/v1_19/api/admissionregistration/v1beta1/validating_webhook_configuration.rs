@@ -361,6 +361,13 @@ impl crate::Metadata for ValidatingWebhookConfiguration {
     }
 }
 
+impl crate::DeepMerge for ValidatingWebhookConfiguration {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.webhooks.merge_from(other.webhooks);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ValidatingWebhookConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

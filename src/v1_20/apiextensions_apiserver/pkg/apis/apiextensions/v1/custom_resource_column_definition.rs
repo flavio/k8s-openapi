@@ -22,6 +22,17 @@ pub struct CustomResourceColumnDefinition {
     pub type_: String,
 }
 
+impl crate::DeepMerge for CustomResourceColumnDefinition {
+    fn merge_from(&mut self, other: Self) {
+        self.description.merge_from(other.description);
+        self.format.merge_from(other.format);
+        self.json_path.merge_from(other.json_path);
+        self.name.merge_from(other.name);
+        self.priority.merge_from(other.priority);
+        self.type_.merge_from(other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceColumnDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

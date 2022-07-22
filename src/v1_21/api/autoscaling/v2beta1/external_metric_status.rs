@@ -16,6 +16,15 @@ pub struct ExternalMetricStatus {
     pub metric_selector: Option<crate::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 }
 
+impl crate::DeepMerge for ExternalMetricStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.current_average_value.merge_from(other.current_average_value);
+        self.current_value.merge_from(other.current_value);
+        self.metric_name.merge_from(other.metric_name);
+        self.metric_selector.merge_from(other.metric_selector);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ExternalMetricStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

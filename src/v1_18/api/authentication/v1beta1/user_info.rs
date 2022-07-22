@@ -16,6 +16,15 @@ pub struct UserInfo {
     pub username: Option<String>,
 }
 
+impl crate::DeepMerge for UserInfo {
+    fn merge_from(&mut self, other: Self) {
+        self.extra.merge_from(other.extra);
+        self.groups.merge_from(other.groups);
+        self.uid.merge_from(other.uid);
+        self.username.merge_from(other.username);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for UserInfo {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

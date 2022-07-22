@@ -11,6 +11,13 @@ pub struct StatefulSetUpdateStrategy {
     pub type_: Option<String>,
 }
 
+impl crate::DeepMerge for StatefulSetUpdateStrategy {
+    fn merge_from(&mut self, other: Self) {
+        self.rolling_update.merge_from(other.rolling_update);
+        self.type_.merge_from(other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetUpdateStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

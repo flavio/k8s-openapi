@@ -10,6 +10,13 @@ pub struct Scheduling {
     pub tolerations: Option<Vec<crate::api::core::v1::Toleration>>,
 }
 
+impl crate::DeepMerge for Scheduling {
+    fn merge_from(&mut self, other: Self) {
+        self.node_selector.merge_from(other.node_selector);
+        self.tolerations.merge_from(other.tolerations);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Scheduling {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

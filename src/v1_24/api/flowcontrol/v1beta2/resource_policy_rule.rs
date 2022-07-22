@@ -19,6 +19,16 @@ pub struct ResourcePolicyRule {
     pub verbs: Vec<String>,
 }
 
+impl crate::DeepMerge for ResourcePolicyRule {
+    fn merge_from(&mut self, other: Self) {
+        self.api_groups.merge_from(other.api_groups);
+        self.cluster_scope.merge_from(other.cluster_scope);
+        self.namespaces.merge_from(other.namespaces);
+        self.resources.merge_from(other.resources);
+        self.verbs.merge_from(other.verbs);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ResourcePolicyRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

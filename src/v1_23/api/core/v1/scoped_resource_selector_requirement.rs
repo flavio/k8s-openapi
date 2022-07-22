@@ -15,6 +15,14 @@ pub struct ScopedResourceSelectorRequirement {
     pub values: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for ScopedResourceSelectorRequirement {
+    fn merge_from(&mut self, other: Self) {
+        self.operator.merge_from(other.operator);
+        self.scope_name.merge_from(other.scope_name);
+        self.values.merge_from(other.values);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ScopedResourceSelectorRequirement {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

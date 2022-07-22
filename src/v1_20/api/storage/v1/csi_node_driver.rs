@@ -16,6 +16,15 @@ pub struct CSINodeDriver {
     pub topology_keys: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for CSINodeDriver {
+    fn merge_from(&mut self, other: Self) {
+        self.allocatable.merge_from(other.allocatable);
+        self.name.merge_from(other.name);
+        self.node_id.merge_from(other.node_id);
+        self.topology_keys.merge_from(other.topology_keys);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CSINodeDriver {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

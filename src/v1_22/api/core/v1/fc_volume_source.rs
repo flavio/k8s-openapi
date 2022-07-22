@@ -19,6 +19,16 @@ pub struct FCVolumeSource {
     pub wwids: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for FCVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.lun.merge_from(other.lun);
+        self.read_only.merge_from(other.read_only);
+        self.target_wwns.merge_from(other.target_wwns);
+        self.wwids.merge_from(other.wwids);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for FCVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -25,6 +25,18 @@ pub struct NodeSpec {
     pub unschedulable: Option<bool>,
 }
 
+impl crate::DeepMerge for NodeSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.config_source.merge_from(other.config_source);
+        self.external_id.merge_from(other.external_id);
+        self.pod_cidr.merge_from(other.pod_cidr);
+        self.pod_cidrs.merge_from(other.pod_cidrs);
+        self.provider_id.merge_from(other.provider_id);
+        self.taints.merge_from(other.taints);
+        self.unschedulable.merge_from(other.unschedulable);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NodeSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

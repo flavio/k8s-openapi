@@ -31,6 +31,12 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RawExtension(pub crate::serde_json::Value);
 
+impl crate::DeepMerge for RawExtension {
+    fn merge_from(&mut self, other: Self) {
+        self.0.merge_from(other.0);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RawExtension {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;

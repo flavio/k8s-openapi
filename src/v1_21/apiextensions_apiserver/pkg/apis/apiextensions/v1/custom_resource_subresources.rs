@@ -10,6 +10,13 @@ pub struct CustomResourceSubresources {
     pub status: Option<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1::CustomResourceSubresourceStatus>,
 }
 
+impl crate::DeepMerge for CustomResourceSubresources {
+    fn merge_from(&mut self, other: Self) {
+        self.scale.merge_from(other.scale);
+        self.status.merge_from(other.status);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CustomResourceSubresources {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

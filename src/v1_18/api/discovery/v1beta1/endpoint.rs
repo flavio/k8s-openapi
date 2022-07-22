@@ -25,6 +25,16 @@ pub struct Endpoint {
     pub topology: Option<std::collections::BTreeMap<String, String>>,
 }
 
+impl crate::DeepMerge for Endpoint {
+    fn merge_from(&mut self, other: Self) {
+        self.addresses.merge_from(other.addresses);
+        self.conditions.merge_from(other.conditions);
+        self.hostname.merge_from(other.hostname);
+        self.target_ref.merge_from(other.target_ref);
+        self.topology.merge_from(other.topology);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Endpoint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

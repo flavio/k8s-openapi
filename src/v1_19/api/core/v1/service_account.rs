@@ -483,6 +483,15 @@ impl crate::Metadata for ServiceAccount {
     }
 }
 
+impl crate::DeepMerge for ServiceAccount {
+    fn merge_from(&mut self, other: Self) {
+        self.automount_service_account_token.merge_from(other.automount_service_account_token);
+        self.image_pull_secrets.merge_from(other.image_pull_secrets);
+        self.metadata.merge_from(other.metadata);
+        self.secrets.merge_from(other.secrets);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ServiceAccount {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

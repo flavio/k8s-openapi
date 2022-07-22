@@ -16,6 +16,15 @@ pub struct Subject {
     pub namespace: Option<String>,
 }
 
+impl crate::DeepMerge for Subject {
+    fn merge_from(&mut self, other: Self) {
+        self.api_group.merge_from(other.api_group);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.namespace.merge_from(other.namespace);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Subject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

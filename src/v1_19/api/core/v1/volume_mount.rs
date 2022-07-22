@@ -22,6 +22,17 @@ pub struct VolumeMount {
     pub sub_path_expr: Option<String>,
 }
 
+impl crate::DeepMerge for VolumeMount {
+    fn merge_from(&mut self, other: Self) {
+        self.mount_path.merge_from(other.mount_path);
+        self.mount_propagation.merge_from(other.mount_propagation);
+        self.name.merge_from(other.name);
+        self.read_only.merge_from(other.read_only);
+        self.sub_path.merge_from(other.sub_path);
+        self.sub_path_expr.merge_from(other.sub_path_expr);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for VolumeMount {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

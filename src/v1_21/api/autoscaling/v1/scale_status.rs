@@ -10,6 +10,13 @@ pub struct ScaleStatus {
     pub selector: Option<String>,
 }
 
+impl crate::DeepMerge for ScaleStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.replicas.merge_from(other.replicas);
+        self.selector.merge_from(other.selector);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ScaleStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

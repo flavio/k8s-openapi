@@ -34,6 +34,21 @@ pub struct APIResource {
     pub version: Option<String>,
 }
 
+impl crate::DeepMerge for APIResource {
+    fn merge_from(&mut self, other: Self) {
+        self.categories.merge_from(other.categories);
+        self.group.merge_from(other.group);
+        self.kind.merge_from(other.kind);
+        self.name.merge_from(other.name);
+        self.namespaced.merge_from(other.namespaced);
+        self.short_names.merge_from(other.short_names);
+        self.singular_name.merge_from(other.singular_name);
+        self.storage_version_hash.merge_from(other.storage_version_hash);
+        self.verbs.merge_from(other.verbs);
+        self.version.merge_from(other.version);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for APIResource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -18,6 +18,15 @@ pub struct AWSElasticBlockStoreVolumeSource {
     pub volume_id: String,
 }
 
+impl crate::DeepMerge for AWSElasticBlockStoreVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.partition.merge_from(other.partition);
+        self.read_only.merge_from(other.read_only);
+        self.volume_id.merge_from(other.volume_id);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for AWSElasticBlockStoreVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

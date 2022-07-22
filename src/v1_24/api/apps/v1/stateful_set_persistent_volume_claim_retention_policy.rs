@@ -10,6 +10,13 @@ pub struct StatefulSetPersistentVolumeClaimRetentionPolicy {
     pub when_scaled: Option<String>,
 }
 
+impl crate::DeepMerge for StatefulSetPersistentVolumeClaimRetentionPolicy {
+    fn merge_from(&mut self, other: Self) {
+        self.when_deleted.merge_from(other.when_deleted);
+        self.when_scaled.merge_from(other.when_scaled);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for StatefulSetPersistentVolumeClaimRetentionPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -25,6 +25,18 @@ pub struct APIServiceSpec {
     pub version_priority: i32,
 }
 
+impl crate::DeepMerge for APIServiceSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.ca_bundle.merge_from(other.ca_bundle);
+        self.group.merge_from(other.group);
+        self.group_priority_minimum.merge_from(other.group_priority_minimum);
+        self.insecure_skip_tls_verify.merge_from(other.insecure_skip_tls_verify);
+        self.service.merge_from(other.service);
+        self.version.merge_from(other.version);
+        self.version_priority.merge_from(other.version_priority);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for APIServiceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

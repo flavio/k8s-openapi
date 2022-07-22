@@ -42,6 +42,21 @@ pub struct JobSpec {
     pub ttl_seconds_after_finished: Option<i32>,
 }
 
+impl crate::DeepMerge for JobSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.active_deadline_seconds.merge_from(other.active_deadline_seconds);
+        self.backoff_limit.merge_from(other.backoff_limit);
+        self.completion_mode.merge_from(other.completion_mode);
+        self.completions.merge_from(other.completions);
+        self.manual_selector.merge_from(other.manual_selector);
+        self.parallelism.merge_from(other.parallelism);
+        self.selector.merge_from(other.selector);
+        self.suspend.merge_from(other.suspend);
+        self.template.merge_from(other.template);
+        self.ttl_seconds_after_finished.merge_from(other.ttl_seconds_after_finished);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for JobSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

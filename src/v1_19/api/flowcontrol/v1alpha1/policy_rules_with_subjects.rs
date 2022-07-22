@@ -13,6 +13,14 @@ pub struct PolicyRulesWithSubjects {
     pub subjects: Vec<crate::api::flowcontrol::v1alpha1::Subject>,
 }
 
+impl crate::DeepMerge for PolicyRulesWithSubjects {
+    fn merge_from(&mut self, other: Self) {
+        self.non_resource_rules.merge_from(other.non_resource_rules);
+        self.resource_rules.merge_from(other.resource_rules);
+        self.subjects.merge_from(other.subjects);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PolicyRulesWithSubjects {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

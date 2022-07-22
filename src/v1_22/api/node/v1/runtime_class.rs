@@ -369,6 +369,15 @@ impl crate::Metadata for RuntimeClass {
     }
 }
 
+impl crate::DeepMerge for RuntimeClass {
+    fn merge_from(&mut self, other: Self) {
+        self.handler.merge_from(other.handler);
+        self.metadata.merge_from(other.metadata);
+        self.overhead.merge_from(other.overhead);
+        self.scheduling.merge_from(other.scheduling);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RuntimeClass {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

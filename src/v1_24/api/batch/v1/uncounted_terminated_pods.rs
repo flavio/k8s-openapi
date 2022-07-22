@@ -10,6 +10,13 @@ pub struct UncountedTerminatedPods {
     pub succeeded: Option<Vec<String>>,
 }
 
+impl crate::DeepMerge for UncountedTerminatedPods {
+    fn merge_from(&mut self, other: Self) {
+        self.failed.merge_from(other.failed);
+        self.succeeded.merge_from(other.succeeded);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for UncountedTerminatedPods {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

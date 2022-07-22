@@ -10,6 +10,13 @@ pub struct RollingUpdateStatefulSetStrategy {
     pub partition: Option<i32>,
 }
 
+impl crate::DeepMerge for RollingUpdateStatefulSetStrategy {
+    fn merge_from(&mut self, other: Self) {
+        self.max_unavailable.merge_from(other.max_unavailable);
+        self.partition.merge_from(other.partition);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RollingUpdateStatefulSetStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

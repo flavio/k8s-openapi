@@ -566,6 +566,14 @@ pub fn run(
 				)?;
 			}
 
+			templates::struct_deep_merge::generate(
+				&mut out,
+				type_name,
+				Default::default(),
+				&template_properties,
+				map_namespace,
+			)?;
+
 			templates::impl_deserialize::generate(
 				&mut out,
 				type_name,
@@ -734,6 +742,14 @@ pub fn run(
 				template_generics,
 				map_namespace,
 				&template_resource_metadata,
+			)?;
+
+			templates::struct_deep_merge::generate(
+				&mut out,
+				type_name,
+				template_generics,
+				&template_properties,
+				map_namespace,
 			)?;
 
 			{

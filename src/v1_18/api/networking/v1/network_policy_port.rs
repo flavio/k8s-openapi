@@ -10,6 +10,13 @@ pub struct NetworkPolicyPort {
     pub protocol: Option<String>,
 }
 
+impl crate::DeepMerge for NetworkPolicyPort {
+    fn merge_from(&mut self, other: Self) {
+        self.port.merge_from(other.port);
+        self.protocol.merge_from(other.protocol);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NetworkPolicyPort {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -7,6 +7,8 @@ pub enum JSONSchemaPropsOrBool {
     Bool(bool),
 }
 
+impl crate::DeepMerge for JSONSchemaPropsOrBool {}
+
 impl<'de> crate::serde::Deserialize<'de> for JSONSchemaPropsOrBool {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;

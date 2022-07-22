@@ -13,6 +13,14 @@ pub struct RuntimeClassSpec {
     pub scheduling: Option<crate::api::node::v1alpha1::Scheduling>,
 }
 
+impl crate::DeepMerge for RuntimeClassSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.overhead.merge_from(other.overhead);
+        self.runtime_handler.merge_from(other.runtime_handler);
+        self.scheduling.merge_from(other.scheduling);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for RuntimeClassSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

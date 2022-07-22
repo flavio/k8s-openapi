@@ -10,6 +10,13 @@ pub struct Lifecycle {
     pub pre_stop: Option<crate::api::core::v1::LifecycleHandler>,
 }
 
+impl crate::DeepMerge for Lifecycle {
+    fn merge_from(&mut self, other: Self) {
+        self.post_start.merge_from(other.post_start);
+        self.pre_stop.merge_from(other.pre_stop);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Lifecycle {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

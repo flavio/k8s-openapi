@@ -18,6 +18,15 @@ pub struct ConfigMapVolumeSource {
     pub optional: Option<bool>,
 }
 
+impl crate::DeepMerge for ConfigMapVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.default_mode.merge_from(other.default_mode);
+        self.items.merge_from(other.items);
+        self.name.merge_from(other.name);
+        self.optional.merge_from(other.optional);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ConfigMapVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

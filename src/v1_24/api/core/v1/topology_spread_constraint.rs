@@ -27,6 +27,16 @@ pub struct TopologySpreadConstraint {
     pub when_unsatisfiable: String,
 }
 
+impl crate::DeepMerge for TopologySpreadConstraint {
+    fn merge_from(&mut self, other: Self) {
+        self.label_selector.merge_from(other.label_selector);
+        self.max_skew.merge_from(other.max_skew);
+        self.min_domains.merge_from(other.min_domains);
+        self.topology_key.merge_from(other.topology_key);
+        self.when_unsatisfiable.merge_from(other.when_unsatisfiable);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for TopologySpreadConstraint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

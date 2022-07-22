@@ -10,6 +10,13 @@ pub struct EventSource {
     pub host: Option<String>,
 }
 
+impl crate::DeepMerge for EventSource {
+    fn merge_from(&mut self, other: Self) {
+        self.component.merge_from(other.component);
+        self.host.merge_from(other.host);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EventSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

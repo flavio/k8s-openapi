@@ -170,6 +170,13 @@ impl crate::Metadata for ComponentStatus {
     }
 }
 
+impl crate::DeepMerge for ComponentStatus {
+    fn merge_from(&mut self, other: Self) {
+        self.conditions.merge_from(other.conditions);
+        self.metadata.merge_from(other.metadata);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ComponentStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

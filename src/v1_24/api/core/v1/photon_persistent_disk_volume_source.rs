@@ -10,6 +10,13 @@ pub struct PhotonPersistentDiskVolumeSource {
     pub pd_id: String,
 }
 
+impl crate::DeepMerge for PhotonPersistentDiskVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.fs_type.merge_from(other.fs_type);
+        self.pd_id.merge_from(other.pd_id);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PhotonPersistentDiskVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

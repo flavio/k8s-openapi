@@ -488,6 +488,13 @@ impl crate::Metadata for Endpoints {
     }
 }
 
+impl crate::DeepMerge for Endpoints {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.subsets.merge_from(other.subsets);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Endpoints {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

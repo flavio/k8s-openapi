@@ -13,6 +13,14 @@ pub struct Handler {
     pub tcp_socket: Option<crate::api::core::v1::TCPSocketAction>,
 }
 
+impl crate::DeepMerge for Handler {
+    fn merge_from(&mut self, other: Self) {
+        self.exec.merge_from(other.exec);
+        self.http_get.merge_from(other.http_get);
+        self.tcp_socket.merge_from(other.tcp_socket);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Handler {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

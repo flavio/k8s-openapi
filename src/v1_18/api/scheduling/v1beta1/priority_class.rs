@@ -370,6 +370,16 @@ impl crate::Metadata for PriorityClass {
     }
 }
 
+impl crate::DeepMerge for PriorityClass {
+    fn merge_from(&mut self, other: Self) {
+        self.description.merge_from(other.description);
+        self.global_default.merge_from(other.global_default);
+        self.metadata.merge_from(other.metadata);
+        self.preemption_policy.merge_from(other.preemption_policy);
+        self.value.merge_from(other.value);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for PriorityClass {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

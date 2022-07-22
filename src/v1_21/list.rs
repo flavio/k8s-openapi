@@ -31,6 +31,13 @@ impl<T> crate::Metadata for List<T> where T: crate::ListableResource {
     }
 }
 
+impl<T> crate::DeepMerge for List<T> where T: crate::ListableResource {
+    fn merge_from(&mut self, other: Self) {
+        self.items.merge_from(other.items);
+        self.metadata.merge_from(other.metadata);
+    }
+}
+
 impl<'de, T> crate::serde::Deserialize<'de> for List<T> where T: crate::serde::Deserialize<'de> + crate::ListableResource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

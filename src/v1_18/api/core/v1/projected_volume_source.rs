@@ -10,6 +10,13 @@ pub struct ProjectedVolumeSource {
     pub sources: Vec<crate::api::core::v1::VolumeProjection>,
 }
 
+impl crate::DeepMerge for ProjectedVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.default_mode.merge_from(other.default_mode);
+        self.sources.merge_from(other.sources);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ProjectedVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

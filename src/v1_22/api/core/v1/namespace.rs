@@ -522,6 +522,14 @@ impl crate::Metadata for Namespace {
     }
 }
 
+impl crate::DeepMerge for Namespace {
+    fn merge_from(&mut self, other: Self) {
+        self.metadata.merge_from(other.metadata);
+        self.spec.merge_from(other.spec);
+        self.status.merge_from(other.status);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for Namespace {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

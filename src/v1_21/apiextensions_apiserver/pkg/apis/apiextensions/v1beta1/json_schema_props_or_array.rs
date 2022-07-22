@@ -7,6 +7,8 @@ pub enum JSONSchemaPropsOrArray {
     Schemas(Vec<crate::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>),
 }
 
+impl crate::DeepMerge for JSONSchemaPropsOrArray {}
+
 impl<'de> crate::serde::Deserialize<'de> for JSONSchemaPropsOrArray {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         struct Visitor;

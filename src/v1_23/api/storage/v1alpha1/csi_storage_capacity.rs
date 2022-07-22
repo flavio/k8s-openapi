@@ -502,6 +502,16 @@ impl crate::Metadata for CSIStorageCapacity {
     }
 }
 
+impl crate::DeepMerge for CSIStorageCapacity {
+    fn merge_from(&mut self, other: Self) {
+        self.capacity.merge_from(other.capacity);
+        self.maximum_volume_size.merge_from(other.maximum_volume_size);
+        self.metadata.merge_from(other.metadata);
+        self.node_topology.merge_from(other.node_topology);
+        self.storage_class_name.merge_from(other.storage_class_name);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for CSIStorageCapacity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

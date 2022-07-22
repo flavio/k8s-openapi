@@ -13,6 +13,14 @@ pub struct NFSVolumeSource {
     pub server: String,
 }
 
+impl crate::DeepMerge for NFSVolumeSource {
+    fn merge_from(&mut self, other: Self) {
+        self.path.merge_from(other.path);
+        self.read_only.merge_from(other.read_only);
+        self.server.merge_from(other.server);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for NFSVolumeSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

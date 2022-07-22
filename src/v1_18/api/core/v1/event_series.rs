@@ -13,6 +13,14 @@ pub struct EventSeries {
     pub state: Option<String>,
 }
 
+impl crate::DeepMerge for EventSeries {
+    fn merge_from(&mut self, other: Self) {
+        self.count.merge_from(other.count);
+        self.last_observed_time.merge_from(other.last_observed_time);
+        self.state.merge_from(other.state);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for EventSeries {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -49,6 +49,26 @@ pub struct ServiceSpec {
     pub type_: Option<String>,
 }
 
+impl crate::DeepMerge for ServiceSpec {
+    fn merge_from(&mut self, other: Self) {
+        self.cluster_ip.merge_from(other.cluster_ip);
+        self.external_ips.merge_from(other.external_ips);
+        self.external_name.merge_from(other.external_name);
+        self.external_traffic_policy.merge_from(other.external_traffic_policy);
+        self.health_check_node_port.merge_from(other.health_check_node_port);
+        self.ip_family.merge_from(other.ip_family);
+        self.load_balancer_ip.merge_from(other.load_balancer_ip);
+        self.load_balancer_source_ranges.merge_from(other.load_balancer_source_ranges);
+        self.ports.merge_from(other.ports);
+        self.publish_not_ready_addresses.merge_from(other.publish_not_ready_addresses);
+        self.selector.merge_from(other.selector);
+        self.session_affinity.merge_from(other.session_affinity);
+        self.session_affinity_config.merge_from(other.session_affinity_config);
+        self.topology_keys.merge_from(other.topology_keys);
+        self.type_.merge_from(other.type_);
+    }
+}
+
 impl<'de> crate::serde::Deserialize<'de> for ServiceSpec {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: crate::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
